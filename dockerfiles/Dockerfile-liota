@@ -1,0 +1,19 @@
+FROM ubuntu:16.04
+
+MAINTAINER Tom Scanlan <tompscanlan@gmail.com>
+
+ENV PYTHON_VERSION 2.7
+
+RUN apt update && \
+    apt install -y \
+    build-essential \
+    git \
+    python$PYTHON_VERSION-dev \
+    python$PYTHON_VERSION-numpy \
+    python-pip \
+    && pip install --upgrade pip \
+    && apt-get -y clean all \
+    && rm -rf /var/lib/apt/lists/* \
+    && pip install pytest mock liota
+
+CMD ["python", "/etc/liota/packages/liotad.py"]

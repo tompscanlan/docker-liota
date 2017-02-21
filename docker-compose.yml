@@ -1,0 +1,23 @@
+version: '2'
+services:
+
+# docker run -p 80 -p 2003 -p 2004 -p 7002 -v $PWD/graphite:/var/lib/graphite/storage/whisper -d nickstenning/graphite
+  graphite:
+    image: nickstenning/graphite
+    container_name: graphite
+    ports:
+      - "8087:80"
+#  volumes:
+#    - ./graphite:/var/lib/graphite/storage/whisper
+
+  liota:
+    image: liota:latest
+    container_name: liota
+    links:
+      - graphite
+    volumes:
+      - ./logging.json:/etc/liota/conf/logging.json
+    build:
+      context: ./dockerfiles
+      dockerfile: Dockerfile-liota
+
