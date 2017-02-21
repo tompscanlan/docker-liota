@@ -6,7 +6,10 @@ services:
     image: nickstenning/graphite
     container_name: graphite
     ports:
-      - "8087:80"
+      - "80"
+      - "2003"
+      - "2004"
+      - "7002"
 #  volumes:
 #    - ./graphite:/var/lib/graphite/storage/whisper
 
@@ -17,6 +20,7 @@ services:
       - graphite
     volumes:
       - ./logging.json:/etc/liota/conf/logging.json
+      - ./sampleProp.conf:/etc/liota/packages/sampleProp.conf
     build:
       context: ./dockerfiles
       dockerfile: Dockerfile-liota
